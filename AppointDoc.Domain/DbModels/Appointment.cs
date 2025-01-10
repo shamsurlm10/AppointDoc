@@ -10,11 +10,14 @@ namespace AppointDoc.Domain.DbModels
     public sealed class Appointment
     {
         public Guid AppointmentId { get; set; }
-        [Required]
         public string PatientName { get; set; } = string.Empty;
-        public required string PatientContactInformation { get; set; } = string.Empty;
-        public DateTime AppointmentDateTime { get; set; } // Must be in the future
-        public int DoctorId { get; set; } // Foreign Key
-        public required Doctor Doctor { get; set; } // Navigation Property
+        public string PatientContactInformation { get; set; } = string.Empty;
+        public DateTime AppointmentDateTime { get; set; } = DateTime.Now;
+        public int DoctorId { get; set; }
+        public Doctor? Doctor { get; set; }
+        public DateTime CreatedAt {  get; set; } = DateTime.Now;
+        public string? CreatedBy { get; set;}
+        public DateTime UpdatedAt { get; set; }
+        public string? UpdatedBy { get; set; }
     }
 }
