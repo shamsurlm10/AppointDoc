@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointDoc.Infrastructure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointDoc.Api", "AppointDoc.Api\AppointDoc.Api.csproj", "{09131AF9-79DB-41AF-A620-4602744543BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointment.Test", "Appointment.Test\Appointment.Test.csproj", "{B80DDF10-5ED6-448E-B6FC-70D0937B4FC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{09131AF9-79DB-41AF-A620-4602744543BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09131AF9-79DB-41AF-A620-4602744543BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09131AF9-79DB-41AF-A620-4602744543BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B80DDF10-5ED6-448E-B6FC-70D0937B4FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B80DDF10-5ED6-448E-B6FC-70D0937B4FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B80DDF10-5ED6-448E-B6FC-70D0937B4FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B80DDF10-5ED6-448E-B6FC-70D0937B4FC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

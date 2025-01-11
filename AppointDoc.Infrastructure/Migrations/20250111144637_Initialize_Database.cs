@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AppointDoc.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitializingDatabase : Migration
+    public partial class Initialize_Database : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
