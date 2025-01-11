@@ -1,4 +1,5 @@
 ﻿using AppointDoc.Domain.DbModels;
+using AppointDoc.Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppointDoc.Infrastructure.Database

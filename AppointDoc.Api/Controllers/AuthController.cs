@@ -25,8 +25,16 @@ namespace AppointDoc.Api.Controllers
             {
                 return BadRequest("Invalid request.");
             }
-            bool isExistUser = await _authService.IsAlreadyRegisteredUsername(request.Username);
-            if (isExistUser)
+            if (request.Password.Length < 8 || !request.Password.Any(char.IsUpper) || !request.Password.Any(char.IsDigit))
+            {
+                throw new ArgumentException("Password must be at least 8 characters long and include an uppercase letter and a number.");
+            }
+            if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
+            {
+                throw new ArgumentException("Username and password cannot be empty.");
+            }
+            User existUser = await _authService.GetRegisteredUserByUsername(request.Username);
+            if (existUser!=null)
             {
                 return BadRequest("Username already registered");
             }

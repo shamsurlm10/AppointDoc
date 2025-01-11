@@ -31,16 +31,9 @@ namespace AppointDoc.Infrastructure.Repositories
             return newUser;
         }
 
-        public async Task<bool> UserNameValidation(string username)
+        public async Task<User> UserNameValidation(string username)
         {
             User? user =  await _dbContext.users.FirstOrDefaultAsync(u=>u.Username == username);
-            return user != null;
-        }
-
-        public async Task<User> ValidateUser(LoginRegisterRequest request)
-        {
-            User? user = await _dbContext.users
-                .FirstOrDefaultAsync(u => u.Username == request.Username && u.Password == request.Password);
             return user;
         }
     }

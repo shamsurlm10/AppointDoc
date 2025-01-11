@@ -19,7 +19,7 @@ namespace AppointDoc.Domain.DbModels
         public Doctor? Doctor { get; set; }
         public DateTime CreatedAt {  get; set; } = DateTime.Now;
         public string? CreatedBy { get; set;}
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; } = null;
         public string? UpdatedBy { get; set; }
     }
 }

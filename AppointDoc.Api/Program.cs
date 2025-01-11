@@ -1,9 +1,11 @@
 using AppointDoc.Application.Interfaces;
 using AppointDoc.Application.Repositories;
 using AppointDoc.Application.Services;
+using AppointDoc.Domain.DbModels;
 using AppointDoc.Infrastructure.Database;
 using AppointDoc.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -17,6 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 
 builder.Services.AddSingleton<TokenService>();
 
@@ -89,6 +92,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
 
 if (app.Environment.IsDevelopment())
 {

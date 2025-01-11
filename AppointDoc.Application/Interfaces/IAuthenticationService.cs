@@ -15,6 +15,6 @@ namespace AppointDoc.Application.Interfaces
         Task<User> Register (LoginRegisterRequest user);
         Task<AuthenticationResponse> Login(LoginRegisterRequest request);
         Task<AuthenticationResponse> ValidateUser(LoginRegisterRequest request);
-        Task<bool> IsAlreadyRegisteredUsername(string username);
+        Task<User> GetRegisteredUserByUsername(string username);
     }
 }

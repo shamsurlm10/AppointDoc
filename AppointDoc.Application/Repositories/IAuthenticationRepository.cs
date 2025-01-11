@@ -13,7 +13,6 @@ namespace AppointDoc.Application.Repositories
     {
         Task<User> Register(LoginRegisterRequest user);
         Task<AuthenticationResponse> Login(LoginRegisterRequest request);
-        Task<User> ValidateUser(LoginRegisterRequest request);
-        Task<bool> UserNameValidation(string username);
+        Task<User> UserNameValidation(string username);
     }
 }

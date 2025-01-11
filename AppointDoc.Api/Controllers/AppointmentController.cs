@@ -1,8 +1,10 @@
 ﻿using AppointDoc.Application.Interfaces;
 using AppointDoc.Domain.DbModels;
 using AppointDoc.Domain.Dtos.Request;
+using AppointDoc.Domain.Dtos.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 namespace AppointDoc.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -17,7 +19,7 @@ namespace AppointDoc.Api.Controllers
         [Authorize]
         [HttpPost]
         [Route("CreateAppointment")]
-        public async Task<IActionResult> CreateAppointment([FromBody] AppointmentDto appointmentDto)
+        public async Task<IActionResult> CreateAppointment([FromBody] AppointmentRequestDto appointmentDto)
         {
             try
             {
@@ -33,7 +35,7 @@ namespace AppointDoc.Api.Controllers
                     AppointmentDateTime = appointmentDto.AppointmentDateTime,
                     DoctorId = appointmentDto.DoctorId,
                     CreatedAt = DateTime.Now,
-                    CreatedBy = "Admin",
+                    CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier),
                 };
                 bool res = await _appointmentService.AddAsync(appointment);
                 if (!res)
@@ -48,16 +50,25 @@ namespace AppointDoc.Api.Controllers
             }
             
         }
-
+        [Authorize]
         [HttpGet]
         [Route("GetAllAppointments")]
         public async Task<IActionResult> GetAllAppointments()
         {
             var appointments = await _appointmentService.GetAllAsync();
-            return Ok(appointments);
+            List<AppointmentResponseDto> result = new List<AppointmentResponseDto>();
+            result = appointments.Select(appointment => new AppointmentResponseDto
+            {
+                AppointmentId = appointment.AppointmentId,
+                PatientName = appointment.PatientName,
+                PatientContactInformation = appointment.PatientContactInformation,
+                AppointmentDateTime = appointment.AppointmentDateTime,
+                DoctorId = appointment.DoctorId,
+            }).ToList();
+            return Ok(result);
         }
 
-
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAppointmentById(Guid id)
         {
@@ -67,26 +78,33 @@ namespace AppointDoc.Api.Controllers
 
             return Ok(appointment);
         }
-
+        [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAppointment([FromBody] AppointmentDto appointmentDto)
+        public async Task<IActionResult> UpdateAppointment([FromBody] AppointmentRequestDto appointmentDto)
         {
-            Appointment appointment = new Appointment()
+            try
             {
-                PatientName = appointmentDto.PatientName,
-                PatientContactInformation = appointmentDto.PatientContactInformation,
-                AppointmentDateTime = appointmentDto.AppointmentDateTime,
-                DoctorId = appointmentDto.DoctorId,
-                UpdatedAt = DateTime.Now,
-                UpdatedBy = "AdminX",
-            };
-            bool updated = await _appointmentService.UpdateAsync(appointment);
-            if (!updated)
-                return NotFound("Appointment not found or update failed.");
+                Appointment appointment = new Appointment()
+                {
+                    PatientName = appointmentDto.PatientName,
+                    PatientContactInformation = appointmentDto.PatientContactInformation,
+                    AppointmentDateTime = appointmentDto.AppointmentDateTime,
+                    DoctorId = appointmentDto.DoctorId,
+                    UpdatedAt = DateTime.Now,
+                    UpdatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                };
+                bool updated = await _appointmentService.UpdateAsync(appointment);
+                if (!updated)
+                    return NotFound("Appointment not found or update failed.");
 
-            return NoContent();
+                return Ok("Appointment Successfully Updated!!");
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppointment(Guid id)
         {
@@ -94,7 +112,7 @@ namespace AppointDoc.Api.Controllers
             if (!deleted)
                 return NotFound("Appointment not found or delete failed.");
 
-            return NoContent();
+           return Ok("Appointment Successfully Deleted!!");
         }
     }
 }
