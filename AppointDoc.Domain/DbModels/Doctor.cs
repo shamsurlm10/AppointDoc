@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AppointDoc.Domain.DbModels
 {
     public sealed class Doctor
     {
-        public int DoctorId { get; set; }
+        public Guid DoctorId { get; set; }
         [Required]
+        [MaxLength(100)]
         public string DoctorName { get; set; } = string.Empty;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AppointDoc.Application.Interfaces;
 using AppointDoc.Domain.DbModels;
 using AppointDoc.Domain.Dtos.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace AppointDoc.Api.Controllers
 {
@@ -13,28 +14,39 @@ namespace AppointDoc.Api.Controllers
         {
             _appointmentService = appointmentService;
         }
+        [Authorize]
         [HttpPost]
         [Route("CreateAppointment")]
         public async Task<IActionResult> CreateAppointment([FromBody] AppointmentDto appointmentDto)
         {
-            if (appointmentDto.AppointmentDateTime <= DateTime.UtcNow)
-                return BadRequest("Appointment date must be in the future.");
-
-            Appointment appointment = new Appointment()
+            try
             {
-                PatientName = appointmentDto.PatientName,
-                PatientContactInformation = appointmentDto.PatientContactInformation,
-                AppointmentDateTime = appointmentDto.AppointmentDateTime,
-                DoctorId = appointmentDto.DoctorId,
-                CreatedAt = DateTime.Now,
-                CreatedBy = "Admin",
-            };
-            bool res = await _appointmentService.AddAsync(appointment);
-            if (!res)
-            {
-                return StatusCode(500, "An error occurred while creating the appointment.");
+                if (appointmentDto.AppointmentDateTime <= DateTime.UtcNow)
+                    return BadRequest("Appointment date must be in the future.");
+                bool isValidDoctor = await _appointmentService.IsDoctorExist(appointmentDto.DoctorId);
+                if (!isValidDoctor)
+                    return BadRequest("Doctor not found.");
+                Appointment appointment = new Appointment()
+                {
+                    PatientName = appointmentDto.PatientName,
+                    PatientContactInformation = appointmentDto.PatientContactInformation,
+                    AppointmentDateTime = appointmentDto.AppointmentDateTime,
+                    DoctorId = appointmentDto.DoctorId,
+                    CreatedAt = DateTime.Now,
+                    CreatedBy = "Admin",
+                };
+                bool res = await _appointmentService.AddAsync(appointment);
+                if (!res)
+                {
+                    return StatusCode(500, "An error occurred while creating the appointment.");
+                }
+                return Ok("Appointment created successfully.");
             }
-            return Ok("Appointment created successfully.");
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
 
         [HttpGet]

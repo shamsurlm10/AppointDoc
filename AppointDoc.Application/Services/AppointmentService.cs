@@ -12,5 +12,10 @@ namespace AppointDoc.Application.Services
         {
             _repo = repo;
         }
+
+        public async Task<bool> IsDoctorExist(Guid doctorId)
+        {
+            return await _repo.IsDoctorExist(doctorId);
+        }
     }
 }

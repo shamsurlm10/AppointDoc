@@ -17,5 +17,11 @@ namespace AppointDoc.Infrastructure.Repositories
         {
             _db = db;
         }
+
+        public async Task<bool> IsDoctorExist(Guid doctorId)
+        {
+            var response = await _db.doctors.FindAsync(doctorId);
+            return response != null;
+        }
     }
 }

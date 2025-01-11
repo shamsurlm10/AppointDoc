@@ -25,13 +25,20 @@ namespace AppointDoc.Application.Services
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.Username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]));
+
+            var secret = _configuration["Jwt:Secret"];
+            if (string.IsNullOrEmpty(secret))
+            {
+                throw new InvalidOperationException("JWT Secret is not configured.");
+            }
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(issuer: _configuration["Jwt:Issuer"], 
-                                            audience: _configuration["Jwt:Audience"], 
-                                            claims: claims, 
-                                            expires: DateTime.UtcNow.AddMinutes(15), 
-                                            signingCredentials: credentials); 
+            var token = new JwtSecurityToken(issuer: _configuration["Jwt:Issuer"],
+                                            audience: _configuration["Jwt:Audience"],
+                                            claims: claims,
+                                            expires: DateTime.UtcNow.AddMinutes(15),
+                                            signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }

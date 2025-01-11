@@ -11,5 +11,6 @@ namespace AppointDoc.Application.Interfaces
 {
     public interface IAppointmentService : IManager<Appointment>
     {
+        Task<bool> IsDoctorExist(Guid doctorId);
     }
 }

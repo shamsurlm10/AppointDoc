@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AppointDoc.Domain.DbModels
 {
     public sealed class User
     {
         public Guid UserId { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public bool isActive { get; set; } = true;

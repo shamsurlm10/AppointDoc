@@ -4,6 +4,8 @@ using AppointDoc.Application.Repositories;
 using AppointDoc.Domain.DbModels;
 using AppointDoc.Domain.Dtos.Request;
 using AppointDoc.Domain.Dtos.Response;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace AppointDoc.Application.Services
 {
@@ -31,6 +33,7 @@ namespace AppointDoc.Application.Services
         {
             try
             {
+                request.Password = HashPassword(request.Password);
                 return await _authRepo.Register(request);
             }
             catch (Exception)
@@ -41,15 +44,28 @@ namespace AppointDoc.Application.Services
 
         public async Task<AuthenticationResponse> ValidateUser(LoginRegisterRequest request)
         {
+            request.Password = HashPassword(request.Password);
             User user = await _authRepo.ValidateUser(request);
+            if(user == null)
+            {
+                return new AuthenticationResponse();
+            }
             AuthenticationResponse authentication = new AuthenticationResponse
             {
                 Token = _tokenService.GenerateJwtToken(user),
-                UserId = user.UserId,   
+                UserId = user.UserId.ToString(),   
                 IssueDate = DateTime.UtcNow,
             };
             return authentication;
 
+        }
+        private string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return Convert.ToBase64String(hashedBytes);
+            }
         }
     }
 }

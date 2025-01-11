@@ -39,7 +39,7 @@ namespace AppointDoc.Infrastructure.Repositories
 
         public async Task<User> ValidateUser(LoginRegisterRequest request)
         {
-            User user = await _dbContext.users
+            User? user = await _dbContext.users
                 .FirstOrDefaultAsync(u => u.Username == request.Username && u.Password == request.Password);
             return user;
         }

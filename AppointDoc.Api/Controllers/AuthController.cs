@@ -47,9 +47,9 @@ namespace AppointDoc.Api.Controllers
                 return BadRequest("Invalid request.");
             }
             AuthenticationResponse user = await _authService.ValidateUser(request);
-            if (user == null)
+            if (user.UserId == null)
             {
-                return BadRequest("User not found. Please do register.");
+                return StatusCode(404, "Invalid username or password.");
             }
             return Ok(user);
         }

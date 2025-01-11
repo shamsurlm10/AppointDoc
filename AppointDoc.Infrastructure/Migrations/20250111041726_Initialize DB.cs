@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AppointDoc.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class appointmentanddoctortable : Migration
+    public partial class InitializeDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,9 +15,8 @@ namespace AppointDoc.Infrastructure.Migrations
                 name: "doctors",
                 columns: table => new
                 {
-                    DoctorId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DoctorName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DoctorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DoctorName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -25,14 +24,29 @@ namespace AppointDoc.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "users",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    isActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_users", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "appointments",
                 columns: table => new
                 {
                     AppointmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PatientName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PatientContactInformation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PatientName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PatientContactInformation = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     AppointmentDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DoctorId = table.Column<int>(type: "int", nullable: false),
+                    DoctorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -53,6 +67,12 @@ namespace AppointDoc.Infrastructure.Migrations
                 name: "IX_appointments_DoctorId",
                 table: "appointments",
                 column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_users_Username",
+                table: "users",
+                column: "Username",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -60,6 +80,9 @@ namespace AppointDoc.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "appointments");
+
+            migrationBuilder.DropTable(
+                name: "users");
 
             migrationBuilder.DropTable(
                 name: "doctors");

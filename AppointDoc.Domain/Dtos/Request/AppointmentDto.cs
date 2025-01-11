@@ -12,7 +12,6 @@ namespace AppointDoc.Domain.Dtos.Request
         public string PatientName { get; set; } = string.Empty;
         public string PatientContactInformation { get; set; } = string.Empty;
         public DateTime AppointmentDateTime { get; set; }
-        public int DoctorId { get; set; }
-        public required Doctor Doctor { get; set; }
+        public Guid DoctorId { get; set; }
     }
 }

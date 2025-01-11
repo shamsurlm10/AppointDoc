@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace AppointDoc.Application.Repositories
 {
-    public interface IAppointmentRepository:IRepository<Appointment>
+    public interface IAppointmentRepository : IRepository<Appointment>
     {
+        Task<bool> IsDoctorExist(Guid doctorId);
     }
 }
