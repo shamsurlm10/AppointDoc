@@ -1,7 +1,7 @@
 # AppointDoc API Documentation
 
 ## 📖 Overview
-The **AppointDoc API** allows users to register, log in, and manage medical appointments. It provides secure endpoints to create, retrieve, update, and delete appointments using **JWT-based authentication**.
+The **AppointDoc API** allows users to register, log in, and manage medical appointments. It follows the principles of Clean Architecture, ensuring scalability, maintainability, and separation of concerns. The Api provides secure endpoints to create, retrieve, update, and delete appointments using **JWT-based authentication**.
 
 ---
 
