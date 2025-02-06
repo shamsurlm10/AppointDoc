@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace AppointDoc.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initialize_Database : Migration
+    public partial class initializingdatabasev1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -61,6 +63,17 @@ namespace AppointDoc.Infrastructure.Migrations
                         principalTable: "doctors",
                         principalColumn: "DoctorId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "doctors",
+                columns: new[] { "DoctorId", "DoctorName" },
+                values: new object[,]
+                {
+                    { new Guid("55818433-015a-4bcf-9f88-db29e45b85a2"), "Dr. Mawa" },
+                    { new Guid("61739faf-af55-4371-8298-364c325e69cc"), "Dr. Ashiq" },
+                    { new Guid("9b4afc8b-6aad-4623-bc90-08a072523c57"), "Dr. Alam" },
+                    { new Guid("ab012994-b8c5-4b40-b9d0-98d12d1be579"), "Dr. Shamsur" }
                 });
 
             migrationBuilder.CreateIndex(

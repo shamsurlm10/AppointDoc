@@ -29,13 +29,14 @@ namespace AppointDoc.Infrastructure.Database
             });
 
             // Configure Doctor entity
-            modelBuilder.Entity<Doctor>(entity =>
+            modelBuilder.Entity<Doctor>(static entity =>
             {
                 entity.HasKey(d => d.DoctorId);
 
                 entity.Property(d => d.DoctorName)
                       .HasMaxLength(100)
                       .IsRequired();
+                    
             });
 
             // Configure Appointment entity
@@ -51,7 +52,14 @@ namespace AppointDoc.Infrastructure.Database
                       .HasMaxLength(15)
                       .IsRequired();
             });
+            modelBuilder.Seed();
 
+
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.ConfigureWarnings(warnings =>
+                warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
         }
         public DbSet<User> users { get; set; }
         public DbSet<Appointment> appointments { get; set; }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppointDoc.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250111144637_Initialize_Database")]
-    partial class Initialize_Database
+    [Migration("20250206150321_initializing-database-v1")]
+    partial class initializingdatabasev1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,6 +80,28 @@ namespace AppointDoc.Infrastructure.Migrations
                     b.HasKey("DoctorId");
 
                     b.ToTable("doctors");
+
+                    b.HasData(
+                        new
+                        {
+                            DoctorId = new Guid("ab012994-b8c5-4b40-b9d0-98d12d1be579"),
+                            DoctorName = "Dr. Shamsur"
+                        },
+                        new
+                        {
+                            DoctorId = new Guid("55818433-015a-4bcf-9f88-db29e45b85a2"),
+                            DoctorName = "Dr. Mawa"
+                        },
+                        new
+                        {
+                            DoctorId = new Guid("61739faf-af55-4371-8298-364c325e69cc"),
+                            DoctorName = "Dr. Ashiq"
+                        },
+                        new
+                        {
+                            DoctorId = new Guid("9b4afc8b-6aad-4623-bc90-08a072523c57"),
+                            DoctorName = "Dr. Alam"
+                        });
                 });
 
             modelBuilder.Entity("AppointDoc.Domain.DbModels.User", b =>
