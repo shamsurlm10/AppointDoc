@@ -70,10 +70,10 @@ namespace AppointDoc.Infrastructure.Migrations
                 columns: new[] { "DoctorId", "DoctorName" },
                 values: new object[,]
                 {
-                    { new Guid("55818433-015a-4bcf-9f88-db29e45b85a2"), "Dr. Mawa" },
-                    { new Guid("61739faf-af55-4371-8298-364c325e69cc"), "Dr. Ashiq" },
+                    { new Guid("6690301b-3ed3-47e2-a728-13f41844dbd9"), "Dr. Ashiq" },
                     { new Guid("9b4afc8b-6aad-4623-bc90-08a072523c57"), "Dr. Alam" },
-                    { new Guid("ab012994-b8c5-4b40-b9d0-98d12d1be579"), "Dr. Shamsur" }
+                    { new Guid("ef1056a8-01f8-4141-9875-d6d7aa901aa2"), "Dr. Mawa" },
+                    { new Guid("fe2d2b5f-2314-41d7-9e16-ac2c182eb891"), "Dr. Shamsur" }
                 });
 
             migrationBuilder.CreateIndex(

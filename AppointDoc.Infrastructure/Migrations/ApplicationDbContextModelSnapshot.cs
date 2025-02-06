@@ -81,17 +81,17 @@ namespace AppointDoc.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            DoctorId = new Guid("ab012994-b8c5-4b40-b9d0-98d12d1be579"),
+                            DoctorId = new Guid("fe2d2b5f-2314-41d7-9e16-ac2c182eb891"),
                             DoctorName = "Dr. Shamsur"
                         },
                         new
                         {
-                            DoctorId = new Guid("55818433-015a-4bcf-9f88-db29e45b85a2"),
+                            DoctorId = new Guid("ef1056a8-01f8-4141-9875-d6d7aa901aa2"),
                             DoctorName = "Dr. Mawa"
                         },
                         new
                         {
-                            DoctorId = new Guid("61739faf-af55-4371-8298-364c325e69cc"),
+                            DoctorId = new Guid("6690301b-3ed3-47e2-a728-13f41844dbd9"),
                             DoctorName = "Dr. Ashiq"
                         },
                         new
